@@ -8,6 +8,7 @@ abstract class BaseActivity : AppCompatActivity() {
     protected abstract val layoutResource: Int
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        supportActionBar?.hide()
         super.onCreate(savedInstanceState)
         setContentView(layoutResource)
         initComponent()
