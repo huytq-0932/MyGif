@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">MyGif</string>
+    <string name="title_default">Sun Asterisk</string>
     <string name="title_home">Home</string>
     <string name="title_explore">Explore</string>
     <string name="title_favorite">Favorite</string>
+    <string name="title_trending_topics">Trending Topics</string>
+    <string name="title_trending_gifs">Trending GIFs</string>
+    <string name="description_icon_search_action_bar">icon search action bar</string>
+    <string name="description_icon_action_bar">icon action bar</string>
+    <string name="description_default">Sun * Inc. (formerly known as Framgia Inc.), founded in 2012, is a Creative Studio with more than 1300 members in 6 cities in 4 Asian countries at the moment.</string>
 </resources>
