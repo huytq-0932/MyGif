@@ -1,15 +1,17 @@
 package com.sun.mygif.cache
 
 import android.os.AsyncTask
-import com.sun.mygif.data.source.OnDataLoadedListener
+import com.sun.mygif.data.source.local.base.OnDataLoadedCallback
 import com.sun.mygif.utils.download
 import com.sun.mygif.utils.openCachedInputStream
-import java.io.*
-import java.lang.Exception
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.IOException
+import java.io.InputStream
 
 class GetInputStreamAsyncTask(
     private val file: File,
-    private val callback: OnDataLoadedListener<InputStream>
+    private val callback: OnDataLoadedCallback<InputStream>
 ) : AsyncTask<String, Void?, Exception?>() {
 
     override fun doInBackground(vararg params: String): Exception? {
