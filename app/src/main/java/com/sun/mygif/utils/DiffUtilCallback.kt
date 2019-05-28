@@ -3,8 +3,8 @@ package com.sun.mygif.utils
 import android.support.v7.util.DiffUtil
 
 class DiffUtilCallback<T>(
-    private val newItems: List<T>,
-    private val oldItems: List<T>
+    private val oldItems: List<T>,
+    private val newItems: List<T>
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int = oldItems.size
