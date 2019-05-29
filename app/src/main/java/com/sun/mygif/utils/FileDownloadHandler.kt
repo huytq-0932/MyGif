@@ -3,8 +3,6 @@ package com.sun.mygif.utils
 import java.io.*
 import java.net.URL
 
-private const val BUFFER_SIZE = 65536
-
 /** Download the image into the cache. */
 @Throws(IOException::class)
 fun File.download(url: String) {

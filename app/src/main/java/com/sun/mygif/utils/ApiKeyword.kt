@@ -12,6 +12,7 @@ const val QUERY_LIMIT = "limit"
 const val QUERY_OFFSET = "offset"
 const val QUERY_KEY = "key"
 const val QUERY_LOCALE = "locale"
+const val QUERY_IDS = "ids"
 
 const val PATH_V1 = "v1"
 const val PATH_GIFS = "gifs"
@@ -20,7 +21,7 @@ const val PATH_TRENDING = "trending"
 const val PATH_TRENDING_TERMS = "trending_terms"
 const val PATH_RANDOM = "random"
 
-const val DEFAULT_GIFS_LIMIT = 35
+const val DEFAULT_GIFS_LIMIT = 50
 const val DEFAULT_RANDOM_LIMIT = 1
 const val DEFAULT_TOPIC_LIMIT = 10
 const val DEFAULT_LOCALE = "vi_VN"

@@ -7,6 +7,9 @@ import java.io.UnsupportedEncodingException
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import java.text.ParseException
+import java.util.*
+import java.util.stream.Collector
+import java.util.stream.Collectors
 
 private const val TAG = "StringConverter"
 private const val HASH_MD5 = "MD5"
