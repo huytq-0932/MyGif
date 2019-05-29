@@ -9,6 +9,7 @@ private const val WIDTH = "width"
 private const val HEIGHT = "height"
 private const val URL = "url"
 private const val DATA = "data"
+private const val TITLE = "title"
 
 data class GifsResponse(val data: List<Data>) {
     constructor(jsonObject: JSONObject) : this(
@@ -19,9 +20,10 @@ data class GifsResponse(val data: List<Data>) {
         }
     )
 
-    data class Data(val id: String, val images: Image) {
+    data class Data(val id: String, val title: String, val images: Image) {
         constructor(jsonObject: JSONObject) : this(
             id = jsonObject.getString(ID),
+            title = jsonObject.getString(TITLE),
             images = Image(jsonObject.getJSONObject(IMAGES))
         )
 
