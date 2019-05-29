@@ -1,12 +1,12 @@
 package com.sun.mygif.ui.main
 
-import android.support.v4.app.Fragment
 import com.sun.mygif.R
-import com.sun.mygif.ui.BaseActivity
+import com.sun.mygif.ui.base.BaseActivity
 import com.sun.mygif.ui.explore.ExploreContentFragment
 import com.sun.mygif.ui.favorite.FavoriteContentFragment
 import com.sun.mygif.ui.home.HomeContentFragment
-import kotlinx.android.synthetic.main.activity_main.bottomNavigation
+import com.sun.mygif.ui.search.SearchFragment
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
 
@@ -27,8 +27,11 @@ class MainActivity : BaseActivity() {
     override fun initData() {
     }
 
-    private fun openFragment(id: Int, fragment: Fragment, isAddToBackStack: Boolean) =
-        supportFragmentManager.beginTransaction().replace(id, fragment).apply {
-            if (isAddToBackStack) addToBackStack(null)
-        }.commit()
+    override fun onBackPressed() = if (isSearchingGifs()) handleSearchOff() else super.onBackPressed()
+
+    private fun isSearchingGifs() = supportFragmentManager.findFragmentById(R.id.constraintMain) is SearchFragment
+
+    private fun handleSearchOff() = with(supportFragmentManager) {
+        for (index in 0 until backStackEntryCount) popBackStack()
+    }
 }

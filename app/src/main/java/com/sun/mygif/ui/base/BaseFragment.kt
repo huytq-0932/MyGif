@@ -2,7 +2,6 @@ package com.sun.mygif.ui.base
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,7 +29,7 @@ abstract class BaseFragment : Fragment() {
 
     protected abstract fun initData()
 
-    protected fun toastMessage(message: String) = Toast.makeText(context?.applicationContext, message, Toast.LENGTH_SHORT).show()
+    protected fun toastMessage(message: String) = Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 
     protected fun replaceFragment(id: Int, fragment: Fragment, addToBackStack: Boolean) =
         activity?.supportFragmentManager?.beginTransaction()?.replace(id, fragment)?.apply {

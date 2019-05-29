@@ -1,7 +1,8 @@
 package com.sun.mygif.cache
 
 import android.content.Context
-import com.sun.mygif.utils.FORMAT_EXEPTION_IO
+import android.content.res.Resources
+import com.sun.mygif.R
 import com.sun.mygif.utils.computeMD5Hash
 import com.sun.mygif.utils.toHexString
 import java.io.File
@@ -10,12 +11,16 @@ import java.io.IOException
 private const val NAME_SUB_DIR = "GifView"
 
 class CacheHandler(private val context: Context) {
-
     fun getFile(url: String): File? {
         return try {
             getCacheSubDir(context).let {
                 if (!it.exists() && !it.mkdirs()) {
-                    throw IOException(String.format(FORMAT_EXEPTION_IO, it.absolutePath))
+                    throw IOException(
+                        String.format(
+                            Resources.getSystem().getString(R.string.format_exception_io),
+                            it.absolutePath
+                        )
+                    )
                 }
                 val pathName = StringBuilder(it.absolutePath).apply {
                     append(File.separator)

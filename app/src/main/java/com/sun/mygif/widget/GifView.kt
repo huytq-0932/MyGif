@@ -7,7 +7,7 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import com.sun.mygif.cache.CacheHandler
-import com.sun.mygif.data.source.local.base.OnDataLoadedCallback
+import com.sun.mygif.data.source.OnDataLoadedCallback
 import com.sun.mygif.utils.getInputStream
 import com.sun.mygif.utils.gradientColors
 import java.io.FileNotFoundException
@@ -59,8 +59,7 @@ class GifView : View {
     // load data from gifUrl to gifview
     private fun loadGif(urlString: String) {
         try {
-            cacheHandler.getFile(urlString)?.getInputStream(urlString, object :
-                OnDataLoadedCallback<InputStream> {
+            cacheHandler.getFile(urlString)?.getInputStream(urlString, object : OnDataLoadedCallback<InputStream> {
                 override fun onSuccess(data: InputStream) {
                     movie = Movie.decodeStream(data)
                     invalidate()

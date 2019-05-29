@@ -1,7 +1,7 @@
 package com.sun.mygif.cache
 
 import android.os.AsyncTask
-import com.sun.mygif.data.source.local.base.OnDataLoadedCallback
+import com.sun.mygif.data.source.OnDataLoadedCallback
 import com.sun.mygif.utils.download
 import com.sun.mygif.utils.openCachedInputStream
 import java.io.File

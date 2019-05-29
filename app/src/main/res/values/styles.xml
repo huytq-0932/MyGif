@@ -74,4 +74,17 @@
         <item name="android:background">@color/color_white_alpha_50</item>
         <item name="android:indeterminateTint" tools:targetApi="lollipop">@color/color_red</item>
     </style>
+
+    <style name="ContentDisplayBackground">
+        <item name="android:paddingStart">@dimen/dp_40</item>
+        <item name="android:paddingEnd">@dimen/dp_40</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="SearchBox" parent="TextDefaultStyle">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:imeOptions">actionSearch</item>
+        <item name="android:layout_height">@dimen/dp_40</item>
+        <item name="android:inputType">textPersonName</item>
+    </style>
 </resources>
