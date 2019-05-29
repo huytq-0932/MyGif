@@ -8,7 +8,7 @@
     tools:context=".ui.home.HomeContentFragment">
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingButton"
+        android:id="@+id/buttonScrollToTop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dp_16"
@@ -43,6 +43,7 @@
         android:id="@+id/recyclerTrendingGifs"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="@dimen/dp_2"
         android:background="@color/color_white"
         app:layout_constraintBottom_toTopOf="@+id/progressBar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -61,7 +62,6 @@
 
     <ProgressBar
         android:id="@+id/progressBar"
-        style="@style/ProgressBarColorful"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/dp_8"
@@ -69,5 +69,4 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 </android.support.constraint.ConstraintLayout>

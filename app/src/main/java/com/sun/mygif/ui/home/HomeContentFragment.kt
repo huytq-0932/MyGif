@@ -32,7 +32,7 @@ class HomeContentFragment : BaseFragment(), HomeContentContract.View {
     override val layoutResource = R.layout.fragment_home_content
 
     private val topicAdapter: TopicAdapter = TopicAdapter {
-        addFragment(R.id.constraintMain, SearchFragment.newInstance(it.title), true)
+        replaceFragment(R.id.constraintMain, SearchFragment.newInstance(it.title), true)
     }
     private val gifAdapter: GifVerticalAdapter = GifVerticalAdapter {
         addFragment(R.id.constraintMain, DetailFragment.newInstance(GifInfo(it.id, CATEGORY_TRENDING)), true)
@@ -59,7 +59,7 @@ class HomeContentFragment : BaseFragment(), HomeContentContract.View {
             registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
                 override fun onItemRangeInserted(positionStart: Int, itemCount: Int) = with(speedyLayoutManager) {
                     if (itemCount > DEFAULT_GIFS_LIMIT) {
-                        scrollToPosition(recyclerTrendingGifs, null, positionStart + 5, SLOWLY)
+                        view?.run { scrollToPosition(recyclerTrendingGifs, null, positionStart + 5, SLOWLY) }
                     }
                 }
             })
@@ -68,7 +68,7 @@ class HomeContentFragment : BaseFragment(), HomeContentContract.View {
         addOnScrollListener(object : EndlessRecyclerViewScrollListener(speedyLayoutManager) {
             override fun onLoadMore(page: Int, totalItemsCount: Int) {
                 homePresenter?.getTrendingGifs(totalItemsCount)
-                speedyLayoutManager.scrollToBottom(recyclerTrendingGifs)
+                view?.run { speedyLayoutManager.scrollToBottom(recyclerTrendingGifs) }
             }
 
             override fun onExpandView() = expandTrendingGifs()
@@ -78,14 +78,16 @@ class HomeContentFragment : BaseFragment(), HomeContentContract.View {
 
     private fun initBackToHeadButton() = with(buttonScrollToTop) {
         setOnClickListener {
-            speedyLayoutManager.scrollToTop(recyclerTrendingGifs)
+            view?.run { speedyLayoutManager.scrollToTop(recyclerTrendingGifs) }
         }
         hide()
     }
 
     override fun initData() {
         activity?.let {
-            val trendingTopicDAO = TrendingTopicDAOImpl(it.getPreferences(Context.MODE_PRIVATE))
+            val trendingTopicDAO = TrendingTopicDAOImpl.getInstance(
+                sharedPreferences = it.getPreferences(Context.MODE_PRIVATE)
+            )
 
             val topicRepository = TopicRepository.getInstance(
                 localDataSource = TopicLocalDataSource.getInstance(trendingTopicDAO),
@@ -105,15 +107,19 @@ class HomeContentFragment : BaseFragment(), HomeContentContract.View {
     override fun appendTrendingGifs(gifs: List<Gif>) = gifAdapter.insertData(gifs)
 
     override fun expandTrendingGifs() {
-        titleTrendingTopics.visibility = View.GONE
-        recyclerTrendingTopics.visibility = View.GONE
-        buttonScrollToTop.show()
+        view?.run {
+            titleTrendingTopics.visibility = View.GONE
+            recyclerTrendingTopics.visibility = View.GONE
+            buttonScrollToTop.show()
+        }
     }
 
     override fun collapseTrendingGifs() {
-        titleTrendingTopics.visibility = View.VISIBLE
-        recyclerTrendingTopics.visibility = View.VISIBLE
-        buttonScrollToTop.hide()
+        view?.run {
+            titleTrendingTopics.visibility = View.VISIBLE
+            recyclerTrendingTopics.visibility = View.VISIBLE
+            buttonScrollToTop.hide()
+        }
     }
 
     override fun showLoading() {
