@@ -1,8 +1,7 @@
 package com.sun.mygif.data.source.remote.response
 
 import android.os.AsyncTask
-import com.sun.mygif.data.model.DataRequest
-import com.sun.mygif.data.source.local.base.OnDataLoadedCallback
+import com.sun.mygif.data.source.OnDataLoadedCallback
 import org.json.JSONException
 import java.io.IOException
 import java.lang.Exception

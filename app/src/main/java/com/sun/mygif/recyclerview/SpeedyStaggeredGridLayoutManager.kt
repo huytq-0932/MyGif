@@ -26,6 +26,14 @@ class SpeedyStaggeredGridLayoutManager(
         smoothScrollToPosition(recyclerView, state, position)
     }
 
+    fun scrollToBottom(recyclerView: RecyclerView){
+        scrollToPosition(recyclerView, null, itemCount, SLOWLY)
+    }
+
+    fun scrollToTop(recyclerView: RecyclerView){
+        scrollToPosition(recyclerView, null, 0, SPEEDY)
+    }
+
     companion object {
         const val SPEEDY = 1
         const val SLOWLY = 2
