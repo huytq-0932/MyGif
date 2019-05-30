@@ -16,7 +16,7 @@ data class DataRequest(
             appendPath(it)
         }
         queryParams.forEach {
-            appendQueryParameter(it.key, URLEncoder.encode(it.value.toString(), "UTF-8"))
+            appendQueryParameter(it.key, it.value.toString())
         }
     }.toString()
 }
