@@ -1,8 +1,8 @@
 package com.sun.mygif.data.source
 
+import com.sun.mygif.data.model.ParentTopic
 import com.sun.mygif.data.model.Topic
 import com.sun.mygif.data.model.TopicsResponse
-import com.sun.mygif.data.source.local.base.OnDataLoadedCallback
 
 interface TopicDataSource {
     interface Remote {
@@ -10,7 +10,9 @@ interface TopicDataSource {
     }
 
     interface Local {
-        fun getSavedTrendingTopics(titles: List<String>): List<Topic?>
+        fun getSavedTopicsByTitles(titles: List<String>): List<Topic?>
         fun saveTopic(topic: Topic)
+        fun getParentTopicInfos(callback: OnDataLoadedCallback<List<ParentTopic>>)
+        fun getSubTopics(callback: OnDataLoadedCallback<List<Topic>>)
     }
 }
