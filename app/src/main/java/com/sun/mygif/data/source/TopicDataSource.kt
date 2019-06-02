@@ -10,9 +10,9 @@ interface TopicDataSource {
     }
 
     interface Local {
-        fun getSavedTopicsByTitles(titles: List<String>): List<Topic?>
+        fun getSavedTopicsByTitles(titles: List<String>, callback: OnDataLoadedCallback<List<Topic?>>)
         fun saveTopic(topic: Topic)
-        fun getParentTopicInfos(callback: OnDataLoadedCallback<List<ParentTopic>>)
+        fun getParentTopics(callback: OnDataLoadedCallback<List<ParentTopic>>)
         fun getSubTopics(callback: OnDataLoadedCallback<List<Topic>>)
     }
 }

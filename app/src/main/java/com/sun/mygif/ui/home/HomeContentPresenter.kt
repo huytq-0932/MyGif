@@ -22,23 +22,27 @@ class HomeContentPresenter(
         getTrendingGifs(0)
     }
 
-    override fun getTrendingTopics() {
+    override fun getTrendingTopics() =
         topicRepository.getUpdatedTrendingTopics(object :
             OnDataLoadedCallback<TopicsResponse> {
-            override fun onSuccess(data: TopicsResponse) {
-                val topics = topicRepository.getSavedTopicsByTitles(data.results).also {
-                    homeView.appendTrendingTopics(it.filterNotNull())
-                }
+            override fun onSuccess(data: TopicsResponse) = getSavedTopics(titles = data.results)
+
+            override fun onFailed(exception: Exception) = homeView.toast(exception.message.toString())
+        })
+
+    private fun getSavedTopics(titles: List<String>) {
+        topicRepository.getSavedTopicsByTitles(titles, object : OnDataLoadedCallback<List<Topic?>> {
+            override fun onSuccess(data: List<Topic?>) {
+
+                homeView.appendTrendingTopics(topics = data.filterNotNull())
 
                 val unsavedTopicTitles = ArrayList<String>().apply {
-                    topics.forEachIndexed { index, topic -> topic ?: add(data.results[index]) }
+                    data.forEachIndexed { index, topic -> topic ?: add(titles[index]) }
                 }
                 if (unsavedTopicTitles.isNotEmpty()) getGifBackgroundTopics(unsavedTopicTitles)
             }
 
-            override fun onFailed(exception: Exception) {
-                homeView.toast(exception.message.toString())
-            }
+            override fun onFailed(exception: Exception) = homeView.toast(exception.message.toString())
         })
     }
 
@@ -46,6 +50,7 @@ class HomeContentPresenter(
         gifRepository.getRandomGifs(titles, object :
             OnDataLoadedCallback<List<RandomGifResponse?>> {
             override fun onSuccess(data: List<RandomGifResponse?>) {
+
                 val topics = data.mapIndexed { index, response ->
                     response?.let {
                         Topic(title = titles[index], gifBackground = Gif(it.results[0])).also { topic ->
@@ -67,6 +72,7 @@ class HomeContentPresenter(
 
         gifRepository.getTrendingGifs(offset, object : OnDataLoadedCallback<GifsResponse> {
             override fun onSuccess(data: GifsResponse) {
+
                 val gifs = data.data.map { Gif(it) }
                 with(homeView) {
                     appendTrendingGifs(gifs)

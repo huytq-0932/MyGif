@@ -1,17 +1,16 @@
 package com.sun.mygif.data.source.remote
 
 import com.sun.mygif.BuildConfig
+import com.sun.mygif.data.model.DataRequest
 import com.sun.mygif.data.model.GifResponse
 import com.sun.mygif.data.model.GifsResponse
 import com.sun.mygif.data.model.RandomGifResponse
-import com.sun.mygif.data.model.DataRequest
 import com.sun.mygif.data.source.GifDataSource
-import com.sun.mygif.data.source.local.base.OnDataLoadedCallback
+import com.sun.mygif.data.source.OnDataLoadedCallback
 import com.sun.mygif.data.source.remote.response.*
 import com.sun.mygif.utils.*
 
 class GifRemoteDataSource private constructor() : GifDataSource.Remote {
-
     override fun getTrendingGifs(offset: Int, callback: OnDataLoadedCallback<GifsResponse>) {
         GetResponseAsync(GifsResponseHandler(), callback).execute(
             DataRequest(
@@ -49,7 +48,7 @@ class GifRemoteDataSource private constructor() : GifDataSource.Remote {
                 scheme = SCHEME_HTTP,
                 authority = AUTHORITY_GIPHY,
                 paths = listOf(PATH_V1, PATH_GIFS, gifId),
-                queryParams = mapOf(QUERY_API_KEY to BuildConfig.GIPHY_API_KEY)
+                queryParams = mapOf(QUERY_API_KEY to BuildConfig.GIPHY_API_KEY2)
             ).toUrl()
         )
     }
@@ -87,9 +86,25 @@ class GifRemoteDataSource private constructor() : GifDataSource.Remote {
         GetResponsesAsync(RandomGifResponseHandler(), callback).execute(urlRequests)
     }
 
+    override fun getGifs(gifIds: List<String>, callback: OnDataLoadedCallback<GifsResponse>) {
+        GetResponseAsync(GifsResponseHandler(), callback).execute(
+            DataRequest(
+                scheme = SCHEME_HTTP,
+                authority = AUTHORITY_GIPHY,
+                paths = listOf(PATH_V1, PATH_GIFS),
+                queryParams = mapOf(
+                    QUERY_API_KEY to BuildConfig.GIPHY_API_KEY,
+                    QUERY_IDS to gifIds.joinToString()
+                )
+            ).toUrl()
+        )
+    }
+
     companion object {
-        val instance: GifRemoteDataSource by lazy {
-            GifRemoteDataSource()
+        private var sInstance: GifRemoteDataSource? = null
+        @JvmStatic
+        fun getInstance(): GifRemoteDataSource {
+            return sInstance ?: GifRemoteDataSource().also { sInstance = it }
         }
     }
 }

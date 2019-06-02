@@ -1,6 +1,5 @@
 package com.sun.mygif.data.source
 
-import com.sun.mygif.data.model.GifInfo
 import com.sun.mygif.data.model.GifResponse
 import com.sun.mygif.data.model.GifsResponse
 import com.sun.mygif.data.model.RandomGifResponse
@@ -16,9 +15,9 @@ interface GifDataSource {
     }
 
     interface Local {
-        fun getFavoriteInfos(callback: OnDataLoadedCallback<List<GifInfo>>)
-        fun addFavorite(gifInfo: GifInfo, callback: OnDataLoadedCallback<Boolean>)
-        fun deleteFavorite(gifInfo: GifInfo, callback: OnDataLoadedCallback<List<GifInfo>?>)
-        fun isFavorite(gifInfo: GifInfo, callback: OnDataLoadedCallback<Boolean>)
+        fun getFavoriteIds(callback: OnDataLoadedCallback<List<String>>)
+        fun addFavorite(gifId: String, callback: OnDataLoadedCallback<Boolean>)
+        fun deleteFavorite(gifId: String, callback: OnDataLoadedCallback<Boolean>)
+        fun isFavorite(gifId: String, callback: OnDataLoadedCallback<Boolean>)
     }
 }

@@ -1,7 +1,5 @@
 package com.sun.mygif.data.source.remote.response
 
-import android.content.res.Resources
-import com.sun.mygif.R
 import com.sun.mygif.data.source.remote.build
 import com.sun.mygif.data.source.remote.getJsonString
 import com.sun.mygif.utils.METHOD_GET
@@ -10,6 +8,8 @@ import java.io.IOException
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
+
+private const val MESSSAGE_EXCEPTION_IO_HTTP = "Connection error"
 
 interface DataResponseHandler<T> {
 
@@ -24,9 +24,7 @@ interface DataResponseHandler<T> {
             connection = (URL(url).openConnection() as HttpURLConnection).apply {
                 build(METHOD_GET)
                 if (responseCode != HttpURLConnection.HTTP_OK) {
-                    throw IOException(
-                        String.format(Resources.getSystem().getString(R.string.format_exception_io_http), responseCode)
-                    )
+                    throw IOException(MESSSAGE_EXCEPTION_IO_HTTP)
                 }
 
                 InputStreamReader(inputStream).run {

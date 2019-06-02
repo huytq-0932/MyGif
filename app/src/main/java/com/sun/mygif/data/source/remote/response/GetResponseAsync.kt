@@ -4,7 +4,6 @@ import android.os.AsyncTask
 import com.sun.mygif.data.source.OnDataLoadedCallback
 import org.json.JSONException
 import java.io.IOException
-import java.lang.Exception
 
 class GetResponseAsync<T>(
     private val responseHandler: DataResponseHandler<T>,
