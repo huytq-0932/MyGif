@@ -14,6 +14,8 @@
     <string name="title_related">related</string>
     <string name="title_app_closing_dialog">Exit the application</string>
     <string name="title_warning">Warning</string>
+    <string name="title_source_giphy">GIPHY.COM</string>
+
     <string name="notification_app_closing_dialog">Are you sure want to exit?</string>
     <string name="message_warning_permission">Without permission you can not use this app. Do you want to grant permission?</string>
     <string name="message_remove_from_favorites">Do you want to remove this item from your favorites?</string>

@@ -19,6 +19,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "GIPHY_API_KEY", localProperties['giphyApiKey']
         buildConfigField "String", "TENOR_API_KEY", localProperties['tenorApiKey']
+        buildConfigField "String", "GIPHY_API_KEY2", localProperties['giphyApiKey2']
     }
     buildTypes {
         release {
@@ -43,4 +44,5 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:28.0.0'
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.android.support:cardview-v7:28.0.0'
+    implementation 'com.facebook.android:facebook-share:5.0.0'
 }

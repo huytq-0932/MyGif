@@ -36,5 +36,4 @@
         app:layout_constraintEnd_toStartOf="@+id/searchActionBar"
         app:layout_constraintStart_toEndOf="@+id/iconActionBar"
         app:layout_constraintTop_toTopOf="@+id/searchActionBar" />
-
 </android.support.constraint.ConstraintLayout>
