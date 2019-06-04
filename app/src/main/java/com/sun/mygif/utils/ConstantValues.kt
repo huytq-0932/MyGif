@@ -7,9 +7,15 @@ const val EXTRA_ACTION_BAR_INFO = "com.sun.mygif.utils.EXTRA_ACTION_BAR_INFO"
 const val EXTRA_GIF_ID = "com.sun.mygif.utils.EXTRA_GIF_ID"
 const val EXTRA_SEARCH_KEY = "com.sun.mygif.utils.EXTRA_SEARCH_KEY"
 const val EXTRA_GIF_INFO = "com.sun.mygif.utils.EXTRA_GIF_INFO"
+const val EXTRA_GIF_DETAIL = "com.sun.mygif.utils.EXTRA_GIF_DETAIL"
+
+const val ACTION_FINISH_ACTIVITY = "com.sun.mygif.ui.main.ACTION_FINISH_ACTIVITY"
+
 const val CATEGORY_TRENDING = "com.sun.mygif.utils.CATEGORY_TRENDING"
+const val CATEGORY_DEFAULT = "Sun Asterisk"
 const val EMPTY_ID = "com.sun.mygif.utils.EMPTY_ID"
 const val EMPTY_PARAMS = "com.sun.mygif.utils.EMPTY_PARAMS"
+const val EMPTY_TAG = "com.sun.mygif.utils.EMPTY_TAG"
 const val METHOD_GET = "GET"
 
 const val SEPARATOR_PROPERTY = "_"
