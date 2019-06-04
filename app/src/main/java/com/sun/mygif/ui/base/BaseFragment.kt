@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.sun.mygif.R
 import com.sun.mygif.data.model.ActionBarInfo
+import com.sun.mygif.service.GifHeadService
 import com.sun.mygif.ui.home.ActionBarFragment
+import kotlinx.android.synthetic.main.message_toast.view.*
 
 abstract class BaseFragment : Fragment() {
 
@@ -29,7 +31,30 @@ abstract class BaseFragment : Fragment() {
 
     protected abstract fun initData()
 
-    protected fun toastMessage(message: String) = Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    protected fun toastMsg(msg: String){
+        context?.run {
+            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    protected fun toastMsg(resId: Int){
+        context?.run {
+            Toast.makeText(context, this.getString(resId), Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    protected fun toastMsg(iconId: Int, msgId: Int){
+        context?.run {
+            Toast.makeText(this, this.getString(msgId), Toast.LENGTH_SHORT).apply {
+                view = View.inflate(context, R.layout.message_toast, null).apply {
+                    text.apply {
+                        text = context.getString(msgId)
+                        setCompoundDrawablesWithIntrinsicBounds(iconId, 0, 0, 0)
+                    }
+                }
+            }.show()
+        }
+    }
 
     protected fun replaceFragment(id: Int, fragment: Fragment, addToBackStack: Boolean) =
         activity?.supportFragmentManager?.beginTransaction()?.replace(id, fragment)?.apply {
@@ -41,9 +66,20 @@ abstract class BaseFragment : Fragment() {
             if (addToBackStack) addToBackStack(null)
         }?.commit()
 
+    protected fun backToPreviousFragment() = activity?.supportFragmentManager?.run {
+        if (backStackEntryCount > 0) popBackStack()
+    }
+
     protected open fun initActionBar(title: String, iconId: Int) = replaceFragment(
         id = R.id.frameActionBar,
         fragment = ActionBarFragment.newInstance(ActionBarInfo(title, iconId)),
         addToBackStack = false
     )
+
+    protected open fun openGifHead() {
+        activity?.run {
+            startService(GifHeadService.getIntent(this))
+            finish()
+        }
+    }
 }

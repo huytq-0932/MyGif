@@ -29,4 +29,10 @@ abstract class BaseRecyclerViewAdapter<T, V : BaseViewHolder<T>> : RecyclerView.
         val secondPosition = size
         notifyItemRangeInserted(firstPosition, secondPosition - 1)
     }
+
+    fun removeData(position: Int){
+        items.removeAt(position)
+        notifyItemRemoved(position)
+        notifyItemRangeChanged(position, itemCount)
+    }
 }
