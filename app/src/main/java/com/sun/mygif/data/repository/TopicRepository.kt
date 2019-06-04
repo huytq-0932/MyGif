@@ -12,8 +12,9 @@ class TopicRepository private constructor(
     private val remoteDataSource: TopicRemoteDataSource
 ) : TopicDataSource.Remote, TopicDataSource.Local {
 
-    override fun getSavedTopicsByTitles(titles: List<String>): List<Topic?> =
-        localDataSource.getSavedTopicsByTitles(titles)
+    override fun getSavedTopicsByTitles(titles: List<String>, callback: OnDataLoadedCallback<List<Topic?>>) {
+        localDataSource.getSavedTopicsByTitles(titles, callback)
+    }
 
     override fun getUpdatedTrendingTopics(callback: OnDataLoadedCallback<TopicsResponse>) =
         remoteDataSource.getUpdatedTrendingTopics(callback)

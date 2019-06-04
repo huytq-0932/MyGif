@@ -1,9 +1,9 @@
 package com.sun.mygif.data.source.remote
 
 import com.sun.mygif.BuildConfig
-import com.sun.mygif.data.model.TopicsResponse
 import com.sun.mygif.data.model.DataRequest
-import com.sun.mygif.data.source.local.base.OnDataLoadedCallback
+import com.sun.mygif.data.model.TopicsResponse
+import com.sun.mygif.data.source.OnDataLoadedCallback
 import com.sun.mygif.data.source.TopicDataSource
 import com.sun.mygif.data.source.remote.response.GetResponseAsync
 import com.sun.mygif.data.source.remote.response.TopicsResponseHandler
@@ -27,8 +27,10 @@ class TopicRemoteDataSource private constructor() : TopicDataSource.Remote {
     }
 
     companion object {
-        val instance: TopicRemoteDataSource by lazy {
-            TopicRemoteDataSource()
+        private var sInstance: TopicRemoteDataSource? = null
+        @JvmStatic
+        fun getInstance(): TopicRemoteDataSource {
+            return sInstance ?: TopicRemoteDataSource().also { sInstance = it }
         }
     }
 }
