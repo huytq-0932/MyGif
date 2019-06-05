@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/color_white"
     android:elevation="@dimen/dp_16"
+    android:clickable="true"
     tools:context=".ui.search.SearchFragment">
 
     <FrameLayout
