@@ -31,7 +31,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/titleView"
+            android:id="@+id/titleGifDetail"
             style="@style/TextCapsBold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -41,28 +41,17 @@
             android:textColor="@color/color_white"
             android:textSize="@dimen/sp_14"
             app:layout_constraintBottom_toBottomOf="@+id/backDetail"
-            app:layout_constraintEnd_toStartOf="@+id/buttonGoToFavorite"
+            app:layout_constraintEnd_toStartOf="@+id/buttonTabChange"
             app:layout_constraintStart_toEndOf="@+id/backDetail"
             app:layout_constraintTop_toTopOf="@+id/backDetail" />
 
         <ImageView
-            android:id="@+id/buttonGoToFavorite"
+            android:id="@+id/buttonTabChange"
             style="@style/IconSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/dp_8"
-            android:src="@drawable/ic_favorite_border_black_24dp"
-            app:layout_constraintBottom_toBottomOf="@+id/backDetail"
-            app:layout_constraintEnd_toStartOf="@+id/buttonGoToHome"
-            app:layout_constraintTop_toTopOf="@+id/backDetail" />
-
-        <ImageView
-            android:id="@+id/buttonGoToHome"
-            style="@style/IconSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dp_8"
-            android:src="@drawable/ic_home_border_black_24dp"
+            android:src="@drawable/ic_menu_black_24dp"
             app:layout_constraintBottom_toBottomOf="@+id/backDetail"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/backDetail" />

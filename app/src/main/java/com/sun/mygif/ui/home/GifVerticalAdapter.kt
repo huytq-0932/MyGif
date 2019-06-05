@@ -9,14 +9,14 @@ import com.sun.mygif.ui.base.BaseRecyclerViewAdapter
 import com.sun.mygif.ui.base.BaseViewHolder
 import com.sun.mygif.utils.screenWidth
 import com.sun.mygif.widget.BASE_WIDTH
-import kotlinx.android.synthetic.main.item_gif.view.*
+import kotlinx.android.synthetic.main.item_gif_vertical.view.*
 
 class GifVerticalAdapter(
     private val onItemClick: (gif: Gif) -> Unit
 ) : BaseRecyclerViewAdapter<Gif, GifVerticalAdapter.VerticalViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): VerticalViewHolder = VerticalViewHolder(
-        LayoutInflater.from(parent.context).inflate(R.layout.item_gif, parent, false),
+        LayoutInflater.from(parent.context).inflate(R.layout.item_gif_vertical, parent, false),
         onItemClick
     )
 

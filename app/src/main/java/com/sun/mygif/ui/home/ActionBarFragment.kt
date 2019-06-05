@@ -12,7 +12,10 @@ import kotlinx.android.synthetic.main.fragment_action_bar.*
 class ActionBarFragment : BaseFragment(), View.OnClickListener {
     override val layoutResource: Int = R.layout.fragment_action_bar
 
-    override fun initComponents() = searchActionBar.setOnClickListener(this)
+    override fun initComponents() {
+        searchActionBar?.setOnClickListener(this)
+        iconActionBar?.setOnClickListener(this)
+    }
 
     override fun initData() {
         val actionBarInfo = arguments?.getParcelable(EXTRA_ACTION_BAR_INFO) as ActionBarInfo
@@ -20,9 +23,11 @@ class ActionBarFragment : BaseFragment(), View.OnClickListener {
         iconActionBar.setImageResource(actionBarInfo.iconId)
     }
 
-    override fun onClick(clickedView: View?) {
-        if (clickedView?.id == R.id.searchActionBar) {
+    override fun onClick(v: View?) {
+        if (v?.id == R.id.searchActionBar) {
             replaceFragment(R.id.constraintMain, SearchFragment.newInstance(null), true)
+        } else if (v?.id == R.id.iconActionBar) {
+            openGifHead()
         }
     }
 
