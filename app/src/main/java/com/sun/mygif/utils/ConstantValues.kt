@@ -18,6 +18,8 @@ const val EMPTY_PARAMS = "com.sun.mygif.utils.EMPTY_PARAMS"
 const val EMPTY_TAG = "com.sun.mygif.utils.EMPTY_TAG"
 const val METHOD_GET = "GET"
 
+const val GIF_ID_DEFAULT = "3oEduUGL2JaSK7oS76"
+
 const val SEPARATOR_PROPERTY = "_"
 const val BUFFER_SIZE = 65536
 

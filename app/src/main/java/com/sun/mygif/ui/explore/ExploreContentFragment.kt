@@ -22,7 +22,10 @@ class ExploreContentFragment : BaseFragment(), ExploreContract.View {
     }
     private lateinit var explorePresenter: ExploreContract.Presenter
 
-    override fun initComponents() = initRecyclerView()
+    override fun initComponents() {
+        initActionBar(getString(R.string.title_explore), R.drawable.ic_explore_black_24dp)
+        initRecyclerView()
+    }
 
     override fun initData() = initPresenter()
 
