@@ -1,7 +1,6 @@
 package com.sun.mygif.data.model
 
 import android.net.Uri
-import java.net.URLEncoder
 
 data class DataRequest(
     val scheme: String,
