@@ -2,7 +2,6 @@ package com.sun.mygif.data.model
 
 import android.database.Cursor
 import com.sun.mygif.utils.SEPARATOR_PROPERTY
-import java.net.URI
 
 private const val FIELD_NAME = "name"
 private const val FIELD_WIDTH = "width"

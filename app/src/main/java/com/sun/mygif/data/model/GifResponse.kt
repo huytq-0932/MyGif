@@ -6,6 +6,7 @@ private const val ID = "id"
 private const val IMAGES = "images"
 private const val DOWNSIZED_MEDIUM = "downsized_medium"
 private const val TITLE = "title"
+private const val TAGS = "tags"
 private const val SOURCE_TLD = "source_tld"
 private const val WIDTH = "width"
 private const val HEIGHT = "height"
@@ -17,12 +18,22 @@ data class GifResponse(val data: Data) {
         data = Data(jsonObject.getJSONObject(DATA))
     )
 
-    data class Data(val id: String, val sourceTld: String, val title: String, val images: Image) {
+    data class Data(
+        val id: String,
+        val sourceTld: String,
+        val title: String,
+        val images: Image,
+        val tags: List<String>
+    ) {
         constructor(jsonObject: JSONObject) : this(
             id = jsonObject.getString(ID),
             sourceTld = jsonObject.getString(SOURCE_TLD),
             title = jsonObject.getString(TITLE),
-            images = Image(jsonObject.getJSONObject(IMAGES))
+            images = Image(jsonObject.getJSONObject(IMAGES)),
+            tags = ArrayList<String>().apply {
+                val tagList = jsonObject.getJSONArray(TAGS)
+                for (index in 0 until tagList.length()) add(tagList.getString(index))
+            }
         )
 
         data class Image(val downsizedMedium: DownsizedMedium) {

@@ -1,8 +1,11 @@
 package com.sun.mygif.data.model
 
+import android.os.Parcelable
 import com.sun.mygif.utils.EMPTY_ID
+import kotlinx.android.parcel.Parcelize
 
-data class Gif(val id: String, val width: Int, val height: Int, val url: String) {
+@Parcelize
+data class Gif(val id: String, val width: Int, val height: Int, val url: String) : Parcelable {
     constructor(width: Int, height: Int, url: String) : this(EMPTY_ID, width, height, url)
 
     constructor(responseData: GifResponse.Data) : this(

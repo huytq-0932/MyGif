@@ -1,5 +1,6 @@
 package com.sun.mygif.data.repository
 
+import com.sun.mygif.data.model.ParentTopic
 import com.sun.mygif.data.model.Topic
 import com.sun.mygif.data.model.TopicsResponse
 import com.sun.mygif.data.source.OnDataLoadedCallback
@@ -20,6 +21,11 @@ class TopicRepository private constructor(
         remoteDataSource.getUpdatedTrendingTopics(callback)
 
     override fun saveTopic(topic: Topic) = localDataSource.saveTopic(topic)
+
+    override fun getParentTopics(callback: OnDataLoadedCallback<List<ParentTopic>>) =
+        localDataSource.getParentTopics(callback)
+
+    override fun getSubTopics(callback: OnDataLoadedCallback<List<Topic>>) = localDataSource.getSubTopics(callback)
 
     companion object {
         private var sInstance: TopicRepository? = null
