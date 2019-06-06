@@ -3,11 +3,10 @@ package com.sun.mygif.data.source.local.dao
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
-import android.util.Log
 import com.sun.mygif.data.source.local.AppDatabase
-import com.sun.mygif.utils.CATEGORY_DEFAULT
 
 private const val TABLE_FAVORITE_GIFS = "tbl_favorite_gifs"
+private const val ORDER_REVRESE = "id DESC"
 private const val FIELD_GIFID = "gifId"
 private const val SELECTION_LIKE_GIFID = "gifId LIKE ?"
 
@@ -17,7 +16,7 @@ class GifInfoDAOImpl private constructor(context: Context) : GifInfoDAO {
 
     @SuppressLint("Recycle")
     override fun getAll(): List<String> {
-        val cursor = database.query(TABLE_FAVORITE_GIFS, null, null, null, null, null, null)
+        val cursor = database.query(TABLE_FAVORITE_GIFS, null, null, null, null, null, ORDER_REVRESE)
             .apply { moveToFirst() }
         return ArrayList<String>().apply {
             while (!cursor.isAfterLast) {

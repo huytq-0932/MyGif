@@ -7,11 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.sun.mygif.R
 import com.sun.mygif.data.model.ExploreTopic
-import com.sun.mygif.data.model.GifFavorite
 import com.sun.mygif.data.model.Topic
 import com.sun.mygif.ui.base.BaseRecyclerViewAdapter
 import com.sun.mygif.ui.base.BaseViewHolder
-import com.sun.mygif.ui.favorite.FavoriteAdapter
 import com.sun.mygif.ui.home.TopicAdapter
 import kotlinx.android.synthetic.main.item_explore.view.*
 

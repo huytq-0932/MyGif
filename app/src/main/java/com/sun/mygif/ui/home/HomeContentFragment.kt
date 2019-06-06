@@ -6,7 +6,8 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
 import com.sun.mygif.R
-import com.sun.mygif.data.model.*
+import com.sun.mygif.data.model.Gif
+import com.sun.mygif.data.model.Topic
 import com.sun.mygif.data.repository.GifRemoteRepository
 import com.sun.mygif.data.repository.TopicRepository
 import com.sun.mygif.data.source.local.TopicLocalDataSource
@@ -20,7 +21,6 @@ import com.sun.mygif.recyclerview.SpeedyStaggeredGridLayoutManager.Companion.SLO
 import com.sun.mygif.ui.base.BaseFragment
 import com.sun.mygif.ui.detail.DetailFragment
 import com.sun.mygif.ui.search.SearchFragment
-import com.sun.mygif.utils.CATEGORY_TRENDING
 import com.sun.mygif.utils.DEFAULT_GIFS_LIMIT
 import kotlinx.android.synthetic.main.fragment_home_content.*
 import kotlinx.android.synthetic.main.fragment_home_content.view.*

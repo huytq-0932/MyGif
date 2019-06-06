@@ -27,7 +27,7 @@ class ActionBarFragment : BaseFragment(), View.OnClickListener {
         if (v?.id == R.id.searchActionBar) {
             replaceFragment(R.id.constraintMain, SearchFragment.newInstance(null), true)
         } else if (v?.id == R.id.iconActionBar) {
-            openGifHead()
+            openGifHead(null)
         }
     }
 

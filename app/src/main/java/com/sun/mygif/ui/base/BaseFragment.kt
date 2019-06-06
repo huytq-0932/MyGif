@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.sun.mygif.R
 import com.sun.mygif.data.model.ActionBarInfo
+import com.sun.mygif.data.model.GifSmall
 import com.sun.mygif.service.GifHeadService
 import com.sun.mygif.ui.home.ActionBarFragment
 import kotlinx.android.synthetic.main.message_toast.view.*
@@ -76,9 +77,9 @@ abstract class BaseFragment : Fragment() {
         addToBackStack = false
     )
 
-    protected open fun openGifHead() {
+    protected open fun openGifHead(gifSmall: GifSmall?) {
         activity?.run {
-            startService(GifHeadService.getIntent(this))
+            startService(GifHeadService.getIntent(this, gifSmall))
             finish()
         }
     }

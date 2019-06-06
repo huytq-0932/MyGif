@@ -123,7 +123,7 @@ class MainActivity : BaseActivity(), OnFragmentInteractionListener {
 
     override fun onResume() {
         super.onResume()
-        if (GifHeadService.isRunning(this)) stopService(GifHeadService.getIntent(this))
+        if (GifHeadService.isRunning(this)) stopService(GifHeadService.getIntent(this, null))
     }
 
     companion object {

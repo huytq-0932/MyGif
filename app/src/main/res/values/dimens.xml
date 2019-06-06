@@ -30,4 +30,6 @@
     <dimen name="sp_34">34sp</dimen>
 
     <dimen name="pt_8">8pt</dimen>
+    <dimen name="pt_100">100pt</dimen>
+    <dimen name="dp_30">30dp</dimen>
 </resources>

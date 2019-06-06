@@ -5,6 +5,7 @@ import org.json.JSONObject
 private const val ID = "id"
 private const val IMAGES = "images"
 private const val DOWNSIZED_MEDIUM = "downsized_medium"
+private const val FIXED_HEIGHT_SMALL = "fixed_height_small"
 private const val TITLE = "title"
 private const val TAGS = "tags"
 private const val SOURCE_TLD = "source_tld"
@@ -36,12 +37,21 @@ data class GifResponse(val data: Data) {
             }
         )
 
-        data class Image(val downsizedMedium: DownsizedMedium) {
+        data class Image(val downsizedMedium: DownsizedMedium, val fixedHeightSmall: FixedHeightSmall) {
             constructor(jsonObject: JSONObject) : this(
-                downsizedMedium = DownsizedMedium(jsonObject.getJSONObject(DOWNSIZED_MEDIUM))
+                downsizedMedium = DownsizedMedium(jsonObject.getJSONObject(DOWNSIZED_MEDIUM)),
+                fixedHeightSmall = FixedHeightSmall(jsonObject.getJSONObject(FIXED_HEIGHT_SMALL))
             )
 
             data class DownsizedMedium(val width: String, val height: String, val url: String) {
+                constructor(jsonObject: JSONObject) : this(
+                    width = jsonObject.getString(WIDTH),
+                    height = jsonObject.getString(HEIGHT),
+                    url = jsonObject.getString(URL)
+                )
+            }
+
+            data class FixedHeightSmall(val width: String, val height: String, val url: String) {
                 constructor(jsonObject: JSONObject) : this(
                     width = jsonObject.getString(WIDTH),
                     height = jsonObject.getString(HEIGHT),

@@ -53,12 +53,12 @@ class DetailPresenter(
     }
 
     override fun shareToFacebook(url: String) = with(detailView) {
-        notifySharing(R.drawable.ic_messenger_logo, R.string.notification_facebook_sharing)
+        notifySharing(R.drawable.ic_facebook_logo, R.string.notification_facebook_sharing)
         shareGifToFacebook(url)
     }
 
     override fun shareToMessenger(url: String) = with(detailView) {
-        notifySharing(R.drawable.ic_facebook_logo, R.string.notification_messenger_sharing)
+        notifySharing(R.drawable.ic_messenger_logo, R.string.notification_messenger_sharing)
         shareGifToMessenger(url)
     }
 
