@@ -6,7 +6,6 @@ import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
 import com.sun.mygif.R
 import com.sun.mygif.data.model.Gif
-import com.sun.mygif.data.model.GifInfo
 import com.sun.mygif.data.repository.GifRemoteRepository
 import com.sun.mygif.data.source.remote.GifRemoteDataSource
 import com.sun.mygif.recyclerview.EndlessRecyclerViewScrollListener
@@ -29,7 +28,7 @@ class SearchContentFragment : BaseFragment(), SearchContentContract.View {
     )
 
     private val gifAdapter = GifVerticalAdapter {
-        addFragment(R.id.constraintMain, DetailFragment.newInstance(GifInfo(it.id, searchKey)), true)
+        addFragment(R.id.constraintMain, DetailFragment.newInstance(it.id), true)
     }
 
     private lateinit var searchKey: String
@@ -98,7 +97,7 @@ class SearchContentFragment : BaseFragment(), SearchContentContract.View {
         searchProgressBar?.visibility = View.GONE
     }
 
-    override fun toast(message: String) = toastMessage(message)
+    override fun toast(message: String) = toastMsg(message)
 
     override fun setPresenter(presenter: SearchContentContract.Presenter) {
         searchPresenter = presenter

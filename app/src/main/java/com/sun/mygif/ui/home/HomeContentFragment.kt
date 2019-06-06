@@ -5,12 +5,12 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
-import android.widget.Toast
 import com.sun.mygif.R
 import com.sun.mygif.data.model.*
 import com.sun.mygif.data.repository.GifRemoteRepository
 import com.sun.mygif.data.repository.TopicRepository
 import com.sun.mygif.data.source.local.TopicLocalDataSource
+import com.sun.mygif.data.source.local.dao.TopicDAOImpl
 import com.sun.mygif.data.source.local.dao.TrendingTopicDAOImpl
 import com.sun.mygif.data.source.remote.GifRemoteDataSource
 import com.sun.mygif.data.source.remote.TopicRemoteDataSource
@@ -32,13 +32,13 @@ class HomeContentFragment : BaseFragment(), HomeContentContract.View {
     override val layoutResource = R.layout.fragment_home_content
 
     private val topicAdapter: TopicAdapter = TopicAdapter {
-        replaceFragment(R.id.constraintMain, SearchFragment.newInstance(it.title), true)
+        addFragment(R.id.constraintMain, SearchFragment.newInstance(it.title), true)
     }
     private val gifAdapter: GifVerticalAdapter = GifVerticalAdapter {
-        addFragment(R.id.constraintMain, DetailFragment.newInstance(GifInfo(it.id, CATEGORY_TRENDING)), true)
+        addFragment(R.id.constraintMain, DetailFragment.newInstance(it.id), true)
     }
     private val speedyLayoutManager = SpeedyStaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-    private var homePresenter: HomeContentPresenter? = null
+    private lateinit var homePresenter: HomeContentPresenter
 
     override fun initComponents() {
         initActionBar(title = getString(R.string.title_home), iconId = R.drawable.ic_home_black_24dp)
@@ -67,7 +67,7 @@ class HomeContentFragment : BaseFragment(), HomeContentContract.View {
 
         addOnScrollListener(object : EndlessRecyclerViewScrollListener(speedyLayoutManager) {
             override fun onLoadMore(page: Int, totalItemsCount: Int) {
-                homePresenter?.getTrendingGifs(totalItemsCount)
+                homePresenter.getTrendingGifs(totalItemsCount)
                 view?.run { speedyLayoutManager.scrollToBottom(recyclerTrendingGifs) }
             }
 
@@ -88,9 +88,10 @@ class HomeContentFragment : BaseFragment(), HomeContentContract.View {
             val trendingTopicDAO = TrendingTopicDAOImpl.getInstance(
                 sharedPreferences = it.getPreferences(Context.MODE_PRIVATE)
             )
+            val topicDAO = TopicDAOImpl.getInstance(it)
 
             val topicRepository = TopicRepository.getInstance(
-                localDataSource = TopicLocalDataSource.getInstance(trendingTopicDAO),
+                localDataSource = TopicLocalDataSource.getInstance(trendingTopicDAO, topicDAO),
                 remoteDataSource = TopicRemoteDataSource.getInstance()
             )
 
@@ -99,7 +100,7 @@ class HomeContentFragment : BaseFragment(), HomeContentContract.View {
             )
             homePresenter = HomeContentPresenter(this, topicRepository, gifRepository)
         }
-        homePresenter?.start()
+        homePresenter.start()
     }
 
     override fun appendTrendingTopics(topics: List<Topic>) = topicAdapter.insertData(topics)
@@ -130,7 +131,7 @@ class HomeContentFragment : BaseFragment(), HomeContentContract.View {
         progressBar?.visibility = View.GONE
     }
 
-    override fun toast(message: String) = toastMessage(message)
+    override fun toast(message: String) = toastMsg(message)
 
     override fun setPresenter(presenter: HomeContentContract.Presenter) {
         homePresenter = presenter as HomeContentPresenter
