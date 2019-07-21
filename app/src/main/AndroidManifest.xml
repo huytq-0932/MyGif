@@ -14,8 +14,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <receiver
+            android:name=".receiver.MemoryReleaseReceiver"
+            android:enabled="true"
+            android:exported="true"></receiver>
+
+        <service
+            android:name=".service.MemoryReleaseService"
+            android:enabled="true"
+            android:exported="true" />
+
         <activity
-            android:name="com.sun.mygif.ui.viewer.ViewerActivity"
+            android:name=".ui.viewer.ViewerActivity"
             android:theme="@style/ThemeTransparent" />
         <activity android:name=".ui.main.MainActivity">
             <intent-filter>
@@ -40,4 +50,5 @@
             android:authorities="com.facebook.app.FacebookContentProvider921165121558336"
             android:exported="true" />
     </application>
+
 </manifest>

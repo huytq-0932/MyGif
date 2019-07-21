@@ -48,12 +48,14 @@ class SearchContentFragment : BaseFragment(), SearchContentContract.View {
 
     private fun initAdapter() {
         gifAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
-            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) = with(speedyLayoutManager) {
-                if (itemCount > DEFAULT_GIFS_LIMIT) {
-                    scrollToPosition(
-                        recyclerSearches, null, positionStart + 5,
-                        SpeedyStaggeredGridLayoutManager.SLOWLY
-                    )
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                recyclerSearches?.run {
+                    if (itemCount > DEFAULT_GIFS_LIMIT) {
+                        speedyLayoutManager.scrollToPosition(
+                            this@run, null, positionStart + 5,
+                            SpeedyStaggeredGridLayoutManager.SLOWLY
+                        )
+                    }
                 }
             }
         })
@@ -67,7 +69,7 @@ class SearchContentFragment : BaseFragment(), SearchContentContract.View {
             addOnScrollListener(object : EndlessRecyclerViewScrollListener(speedyLayoutManager) {
                 override fun onLoadMore(page: Int, totalItemsCount: Int) {
                     searchPresenter.getSearches(searchKey, totalItemsCount)
-                    speedyLayoutManager.scrollToBottom(recyclerSearches)
+                    speedyLayoutManager.scrollToBottom(this@run)
                 }
 
                 override fun onExpandView() {

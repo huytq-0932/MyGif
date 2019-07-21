@@ -1,16 +1,21 @@
 package com.sun.mygif.ui.main
 
 import android.app.Activity
+import android.app.AlarmManager
 import android.app.AlertDialog
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.support.annotation.RequiresApi
+import android.support.v4.app.ActivityCompat.startActivityForResult
 import android.support.v4.app.Fragment
 import com.sun.mygif.R
+import com.sun.mygif.receiver.MemoryReleaseReceiver
 import com.sun.mygif.service.GifHeadService
+import com.sun.mygif.service.MemoryReleaseService
 import com.sun.mygif.ui.base.BaseActivity
 import com.sun.mygif.ui.base.OnFragmentInteractionListener
 import com.sun.mygif.ui.detail.DetailFragment
@@ -25,8 +30,13 @@ import com.sun.mygif.utils.ScreenHelper.Companion.isShowingFirstScreen
 import com.sun.mygif.utils.ScreenHelper.Companion.isShowingSearchScreen
 import com.sun.mygif.utils.isFirstScreen
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
 private const val PERMISSION_REQUEST_CODE = 201
+private const val ALARM_REQUEST_CODE = 12
+private const val MILLIS_OF_ONE_DAY = 86400000L
+private const val HOUR_RELEASE_MEMORY = 23
+private const val MINUTE_RELEASE_MEMORY = 59
 
 class MainActivity : BaseActivity(), OnFragmentInteractionListener {
 
@@ -52,6 +62,33 @@ class MainActivity : BaseActivity(), OnFragmentInteractionListener {
             getString(EXTRA_GIF_ID, null)?.let { id ->
                 openFragment(R.id.constraintMain, DetailFragment.newInstance(id), true)
                 edit().remove(EXTRA_GIF_ID).apply()
+            }
+        }
+
+        initMemoryHelper()
+    }
+
+    private fun initMemoryHelper() {
+        if(!MemoryReleaseService.isRunning(this)){
+            val pendingIntent = PendingIntent.getBroadcast(
+                this,
+                ALARM_REQUEST_CODE,
+                MemoryReleaseReceiver.getIntent(this),
+                PendingIntent.FLAG_UPDATE_CURRENT
+            )
+            val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+            Calendar.getInstance().apply {
+                timeInMillis = System.currentTimeMillis()
+                set(Calendar.HOUR_OF_DAY, HOUR_RELEASE_MEMORY)
+                set(Calendar.MINUTE, MINUTE_RELEASE_MEMORY)
+            }.also {
+                alarmManager.setInexactRepeating(
+                    AlarmManager.RTC_WAKEUP,
+                    it.timeInMillis,
+                    AlarmManager.INTERVAL_DAY,
+                    pendingIntent
+                )
             }
         }
     }
@@ -95,13 +132,13 @@ class MainActivity : BaseActivity(), OnFragmentInteractionListener {
 
     private fun showAppExitDialog() = with(AlertDialog.Builder(this)) {
         setIcon(R.drawable.ic_exit_to_app_red_24dp)
-        setTitle(getString(com.sun.mygif.R.string.title_app_closing_dialog))
-        setMessage(getString(com.sun.mygif.R.string.notification_app_closing_dialog))
+        setTitle(getString(R.string.title_app_closing_dialog))
+        setMessage(getString(R.string.notification_app_closing_dialog))
 
-        setPositiveButton(context.getString(com.sun.mygif.R.string.title_yes)) { _, _ ->
+        setPositiveButton(context.getString(R.string.title_yes)) { _, _ ->
             finish()
         }
-        setNegativeButton(context.getString(com.sun.mygif.R.string.title_no)) { _, _ ->
+        setNegativeButton(context.getString(R.string.title_no)) { _, _ ->
         }
         show()
     }
@@ -123,7 +160,7 @@ class MainActivity : BaseActivity(), OnFragmentInteractionListener {
 
     override fun onResume() {
         super.onResume()
-        if (GifHeadService.isRunning(this)) stopService(GifHeadService.getIntent(this))
+        if (GifHeadService.isRunning(this)) stopService(GifHeadService.getIntent(this, null))
     }
 
     companion object {

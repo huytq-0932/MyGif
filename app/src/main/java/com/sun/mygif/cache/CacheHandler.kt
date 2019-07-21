@@ -38,12 +38,12 @@ class CacheHandler(private val context: Context) {
         private var cacheSubDir: File? = null
         @JvmStatic
         @Throws(IOException::class)
-        private fun getCacheSubDir(context: Context): File {
+        fun getCacheSubDir(context: Context): File {
             val cacheSubDirectoryPathName = StringBuilder(context.cacheDir.toString()).apply {
                 append(File.separator)
                 append(NAME_SUB_DIR)
             }.toString()
-            return cacheSubDir ?: File(cacheSubDirectoryPathName)
+            return cacheSubDir ?: File(cacheSubDirectoryPathName).also { cacheSubDir = it }
         }
     }
 }

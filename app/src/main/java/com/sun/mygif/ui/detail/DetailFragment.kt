@@ -67,15 +67,15 @@ class DetailFragment : BaseFragment(), DetailContract.View, View.OnClickListener
     }
 
     private fun handleEventClick() {
-        backDetail.setOnClickListener(this)
-        gifViewDetail.setOnClickListener(this)
-        imageLike.setOnClickListener(this)
-        imageCopy.setOnClickListener(this)
-        imageMessenger.setOnClickListener(this)
-        imageFacebook.setOnClickListener(this)
-        gifHead.setOnClickListener(this)
-        buttonTabChange.setOnClickListener(this)
-        textRelated.setOnClickListener(this)
+        backDetail?.setOnClickListener(this)
+        gifViewDetail?.setOnClickListener(this)
+        imageLike?.setOnClickListener(this)
+        imageCopy?.setOnClickListener(this)
+        imageMessenger?.setOnClickListener(this)
+        imageFacebook?.setOnClickListener(this)
+        gifHead?.setOnClickListener(this)
+        buttonTabChange?.setOnClickListener(this)
+        textRelated?.setOnClickListener(this)
     }
 
     private fun initPresenter() {
@@ -119,7 +119,9 @@ class DetailFragment : BaseFragment(), DetailContract.View, View.OnClickListener
         titleSource?.text = if (source.isEmpty()) getString(R.string.title_source_giphy) else source
     }
 
-    override fun showLikeIcon(resId: Int) = imageLike.setImageResource(resId)
+    override fun showLikeIcon(resId: Int) {
+        imageLike?.setImageResource(resId)
+    }
 
     override fun updateRelatedGifsData(relatedGifs: List<Gif>) = gifAdapter.updateData(relatedGifs)
 
@@ -135,24 +137,33 @@ class DetailFragment : BaseFragment(), DetailContract.View, View.OnClickListener
 
             R.id.buttonTabChange -> showPopupMenu()
 
-            R.id.imageLike -> detailPresenter.handleFavorites(gifId = mainGifId)
+            R.id.imageLike -> if (::mainGif.isInitialized) {
+                detailPresenter.handleFavorites(gifId = mainGifId)
+            }
 
-            R.id.imageCopy -> copyGifUrl(mainGif)
+            R.id.imageCopy -> if (::mainGif.isInitialized) {
+                copyGifUrl(mainGif)
+            }
 
-            R.id.imageFacebook -> detailPresenter.shareToFacebook(url = mainGif.gif.url)
+            R.id.imageFacebook -> if (::mainGif.isInitialized) {
+                detailPresenter.shareToFacebook(url = mainGif.gif.url)
+            }
 
-            R.id.imageMessenger -> detailPresenter.shareToMessenger(url = mainGif.gif.url)
+            R.id.imageMessenger -> if (::mainGif.isInitialized) {
+                detailPresenter.shareToMessenger(url = mainGif.gif.url)
+            }
 
             R.id.textRelated -> handleRelatedGifsDisplaying()
 
-            R.id.gifHead -> {
-                listener?.onSaveState(mainGifId)
-                openGifHead()
-            }
+            R.id.gifHead -> showGifHead()
         }
     }
 
-    private fun showOnlyGifView() = activity?.let { startActivity(ViewerActivity.getIntent(it, mainGif)) }
+    private fun showOnlyGifView() = activity?.let {
+        if (::mainGif.isInitialized) {
+            startActivity(ViewerActivity.getIntent(it, mainGif))
+        }
+    }
 
     private fun handleRelatedGifsDisplaying() {
         recyclerRelatedGifs?.run {
@@ -193,6 +204,14 @@ class DetailFragment : BaseFragment(), DetailContract.View, View.OnClickListener
     override fun shareGifToMessenger(gifUrl: String) {
         activity?.run {
             ShareHelper.shareLinkToMessenger(this, gifUrl)
+        }
+    }
+
+    private fun showGifHead() {
+        listener?.onSaveState(mainGifId)
+        if (::mainGif.isInitialized) {
+            copyGifUrl(mainGif)
+            openGifHead(mainGif.gifSmall)
         }
     }
 

@@ -53,8 +53,15 @@ class HomeContentPresenter(
 
                 val topics = data.mapIndexed { index, response ->
                     response?.let {
-                        Topic(title = titles[index], gifBackground = Gif(it.results[0])).also { topic ->
-                            topicRepository.saveTopic(topic)
+                        if (it.results.isNotEmpty()) {
+                            Topic(
+                                title = titles[index],
+                                gifBackground = Gif(it.results[0])
+                            ).also { topic ->
+                                topicRepository.saveTopic(topic)
+                            }
+                        } else {
+                            null
                         }
                     }
                 }
